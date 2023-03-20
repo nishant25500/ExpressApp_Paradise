@@ -10,9 +10,9 @@ const Campground = require('./models/campground');
 const Review = require('./models/review');
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
+//     useNewUrlParser: true,
+//     useCreateIndex: true,
+//     useUnifiedTopology: true
 });
 
 const db = mongoose.connection;
