@@ -31,8 +31,8 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-muted"><%= campground.location%></li>
-                <li class="list-group-item">Submitted by <%= campground.author.username%></li>
-                <li class="list-group-item">₹<%= campground.price%>/night</li>
+                <li class="list-group-item">Uploaded by: <%= campground.author.username%></li>
+                
             </ul>
             <%  if( currentUser && campground.author.equals(currentUser._id))  {%>
             <div class="card-body">

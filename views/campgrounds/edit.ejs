@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 <div class="row">
-    <h1 class="text-center">Edit Campground</h1>
+    <h1 class="text-center">Edit Trip</h1>
     <div class="col-md-6 offset-md-3">
         <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form"
             enctype="multipart/form-data">
@@ -21,27 +21,17 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label" for="price">Campground Price</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="price-label">₹</span>
-                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
-                        aria-describedby="price-label" name="campground[price]" value="<%=campground.price %>"
-                        required><div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="mb-3">
-                <label class="form-label" for="description">Description</label>
+                <label class="form-label" for="description">About</label>
                 <textarea class="form-control" type="text" id="description" name="campground[description]"
                     required><%= campground.description%></textarea>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <div class="form-file custom-file">
                     <input type="file" class="form-file-input" id="image" name="image" multiple>
                     <label class="form-file-label" for="image">
@@ -49,7 +39,15 @@
                         <span class="form-file-button">Browse</span>
                     </label>
                 </div>
-            </div>
+            </div> -->
+
+               <div class="mb-1">
+                <div class="form-file custom-file">
+                <!-- <label for="image" class="form-file-input">Default file input example</label> -->
+                <label for="formFile" class="form-label">Image Upload</label>
+                <input class="form-control" type="file" id="image" name="image">
+               </div> 
+              </div>
            
             <h6>Delete Images: </h6>
             <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
@@ -68,9 +66,9 @@
             </div>
 
             <div class="mb-3">
-                <button class="btn btn-info">Update Campground</button>
+                <button class="btn btn-info">Update</button>
             </div>
         </form>
-        <a class="btn btn-danger mb-3" href="/campgrounds/<%= campground._id%>">Back To Campground</a>
+        <a class="btn btn-danger mb-3" href="/campgrounds/<%= campground._id%>">Back</a>
     </div>
 </div>

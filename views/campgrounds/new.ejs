@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate')%>
 <div class="row">
-    <h1 class="text-center">New Campground</h1>
+    <h1 class="text-center">New Trip</h1>
     <div class="col-md-6 offset-md-3">
         <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
@@ -25,7 +25,7 @@
                     Looks good!
                 </div>
             </div> -->
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
                 <div class="input-group">
                     <span class="input-group-text" id="price-label">₹</span>
@@ -35,7 +35,7 @@
                 <div class="valid-feedback">
                     Looks good!
                 </div>
-            </div>
+            </div> -->
 
             <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
@@ -45,7 +45,7 @@
                     Looks good!
                 </div>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <div class="form-file custom-file">
                     <input type="file" class="form-file-input" id="image" name="image" multiple>
                     <label class="form-file-label" for="image">
@@ -53,12 +53,19 @@
                         <span class="form-file-button">Browse</span>
                     </label>
                 </div>
+            </div> -->
+            <div class="mb-1">
+                <div class="form-file custom-file">
+                <!-- <label for="image" class="form-file-input">Default file input example</label> -->
+                <label for="formFile" class="form-label">Image Upload</label>
+                <input class="form-control" type="file" id="image" name="image">
+               </div> 
             </div>
             <div class="mb-3">
-                <button class="btn btn-success">Add Campground</button>
+                <button class="btn btn-success">Add</button>
             </div>
         </form>
-        <a class="btn btn-danger mb-3" href="/campgrounds">All Campgrounds</a>
+        <a class="btn btn-danger mb-3" href="/campgrounds">All Trips</a>
         <!-- <a href="/campgrounds">All Campgrounds</a> -->
     </div>
 </div>
