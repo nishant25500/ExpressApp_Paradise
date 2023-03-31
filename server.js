@@ -2,12 +2,14 @@ if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
 
+const dbUrl=process.env.DB_URL;
 
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require("connect-mongo");
 const flash = require('connect-flash');
 const ExpressError = require('./utils/ExpressError');
 const methodOverride = require('method-override');
@@ -20,21 +22,42 @@ const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
-    // useNewUrlParser: true,
-    // useCreateIndex: true,
-    // useUnifiedTopology: true,
-    // useFindAndModify: false
-});
+// (session);   
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
+// mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp', {
+//     // useNewUrlParser: true,
+//     // useCreateIndex: true,
+//     // useUnifiedTopology: true,
+//     // useFindAndModify: false
+// });
+
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+//     console.log("Database connected");
+// });
+
+
+// const PORT= process.env.PORT || 3000;
+mongoose.set('strictQuery',false);
+const connectDB= async ()=>{
+    try {
+        const conn = await mongoose.connect(process.env.DB_URL);
+        console.log("mongodb connected");
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+}
+
+const sessionStorage = MongoStore.create({
+    mongoUrl: dbUrl,
+    collectionName: 'sessions',
+    ttl: 14*24*60*60,
+    autoRemove: 'native'
 });
 
 const app = express();
-
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
@@ -42,6 +65,16 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
+
+// const store = new MongoDBStore({
+//     url: dbUrl,
+//     secret: 'thisshouldbeabettersecret!',
+//     touchAfter: 24*60*60
+// });
+
+// store.on("error",function(e){
+//     console.log("SESSION STORE ERROR", e);
+// })
 
 const sessionConfig = {
     secret: 'thisshouldbeabettersecret!',
@@ -51,7 +84,8 @@ const sessionConfig = {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    },
+    store: sessionStorage
 }
 
 app.use(session(sessionConfig))
@@ -93,7 +127,12 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-app.listen(3000, () => {
+// app.listen(3000, () => {
+//     console.log('Serving on port 3000')
+// })
+
+connectDB().then(()=>{
+    app.listen(3000, () => {
     console.log('Serving on port 3000')
 })
-
+});
