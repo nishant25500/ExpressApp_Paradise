@@ -80,6 +80,9 @@
             <button class="btn btn-success">Submit</button>
         </form>
         <% } %>
+        <% if(!currentUser){ %>
+            <h2>Comments</h2>
+        <% } %>    
         <% for(let review of campground.reviews) { %>
         <div class="card mb-3 ">
             <div class="card-body">
